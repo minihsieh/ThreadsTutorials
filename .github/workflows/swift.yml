@@ -16,17 +16,17 @@ jobs:
     runs-on: macos-latest
     
     steps:
-    # - name: Checkout from repository
-    - uses: actions/checkout@v4
+    - name: Checkout from repository
+      uses: actions/checkout@v4
 
     - name: Print out help command from xcodebuild
-    - run: xcodebuild -help
+      run: xcodebuild -help
 
     - name: List out project from Apple iOS xcode project
-    - run: xcodebuild -list -project ThreadsTutorials.xcodeproj
+      run: xcodebuild -list -project ThreadsTutorials.xcodeproj
 
     - name: Clean iOS project
-    - run: xcodebuild clean
+      run: xcodebuild clean
 
     - name: Archive the iOS Project
     - run: xcodebuild archive -scheme ThreadsTutorials -sdk iphoneos -allowProvisioningUpdates -archivePath /Users/MiniHsieh/Desktop/Archive/ThreadsTutorials.xcarchive
