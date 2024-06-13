@@ -29,5 +29,5 @@ jobs:
       run: xcodebuild clean
 
     - name: Archive the iOS Project
-    - run: xcodebuild archive -scheme ThreadsTutorials -sdk iphoneos -allowProvisioningUpdates -archivePath /Users/MiniHsieh/Desktop/Archive/ThreadsTutorials.xcarchive
+      run: xcodebuild archive -scheme ThreadsTutorials -sdk iphoneos -allowProvisioningUpdates -archivePath /Users/MiniHsieh/Desktop/Archive/ThreadsTutorials.xcarchive
 
