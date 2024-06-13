@@ -11,11 +11,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  Build-iOS-Project:
-    runs-on: macos-latest
+  build:
     name: Build iOS Project
+    runs-on: macos-latest
+    
     steps:
-    - name: Checkout from repository
+    # - name: Checkout from repository
     - uses: actions/checkout@v4
 
     - name: Print out help command from xcodebuild
