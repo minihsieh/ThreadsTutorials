@@ -1,0 +1,37 @@
+# This workflow will build a Swift project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+name: Builds Apple iOS project using CI progress
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  Build-iOS-Project:
+    runs-on: macos-latest
+    name: Build iOS Project
+    steps:
+    - name: Checkout from repository
+    - uses: actions/checkout@v4
+
+    - name: Print out help command from xcodebuild
+    - run: xcodebuild -help
+
+    - name: List out project from Apple iOS xcode project
+    - run: xcodebuild -list -project ThreadsTutorials.xcodeproj
+
+    - name: Clean iOS project
+    - run: xcodebuild clean
+
+    - name: Archive the iOS Project
+    - run: xcodebuild archive -scheme ThreadsTutorials -sdk iphoneos -allowProvisioningUpdates -archivePath /Users/MiniHsieh/Desktop/Archive/ThreadsTutorials.xcarchive
+
+    
+    # - name: Build iOS Project
+    #   run: swift build -v
+    # - name: Run tests
+    #   run: swift test -v
