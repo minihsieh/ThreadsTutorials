@@ -30,8 +30,3 @@ jobs:
     - name: Archive the iOS Project
     - run: xcodebuild archive -scheme ThreadsTutorials -sdk iphoneos -allowProvisioningUpdates -archivePath /Users/MiniHsieh/Desktop/Archive/ThreadsTutorials.xcarchive
 
-    
-    # - name: Build iOS Project
-    #   run: swift build -v
-    # - name: Run tests
-    #   run: swift test -v
