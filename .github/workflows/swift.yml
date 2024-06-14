@@ -34,6 +34,9 @@ jobs:
     - name: List directory contents
       run: ls -R
 
+    - name: open access
+      run: chmod -R 755 /Users/runner/work/ThreadsTutorials/ThreadsTutorials/ThreadsTutorials.xcodeproj
+
     - name: Build
       run: |
           proj_path=$(pwd)
