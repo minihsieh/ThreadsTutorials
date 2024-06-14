@@ -29,6 +29,9 @@ jobs:
     - name: Select Xcode version
       run: sudo xcode-select -switch /Applications/Xcode.app
 
+    - name: Check Current Xcode Path
+      run: xcode-select -p
+      
     # - name: Print out help command from xcodebuild
     #   run: xcodebuild -help
 
