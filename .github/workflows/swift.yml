@@ -18,7 +18,7 @@ jobs:
     
     steps:
     - name: Checkout from repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
     - name: List available Xcode versions
       run: ls /Applications | grep Xcode
