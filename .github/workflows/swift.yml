@@ -18,28 +18,33 @@ jobs:
     
     steps:
     - name: Checkout from repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
     - name: List available Xcode versions
       run: ls /Applications | grep Xcode
 
     - name: Set up Xcode version
-      run: sudo xcode-select -s /Applications/Xcode.app
+      run: sudo xcode-select -s /Applications/Xcode_15.3.app
 
     - name: Select Xcode version
-      run: sudo xcode-select -switch /Applications/Xcode.app
-
+      run: sudo xcode-select -switch /Applications/Xcode_15.3.app
     - name: Check Current Xcode Path
       run: xcode-select -p
 
     - name: List directory contents
       run: ls -R
 
+    - name: open access
+      run: chmod -R 755 /Users/runner/work/ThreadsTutorials/ThreadsTutorials/ThreadsTutorials.xcodeproj
+
     - name: Build
       run: |
-          pwd
-          ls -l
-          xcodebuild -project ThreadsTutorials.xcodeproj clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
+          proj_path=$(pwd)
+          sudo xcodebuild -project "$proj_path/ThreadsTutorials.xcodeproj" clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
+          # ls -al .
+          # pwd
+          # xcodebuild -project ThreadsTutorials.xcodeproj clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
+          # xcodebuild -project ThreadsTutorials.xcodeproj clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
           # xcodebuild -scheme ThreadsTutorials clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
 
     - name: build Archive
