@@ -26,6 +26,9 @@ jobs:
     - name: Set up Xcode version
       run: sudo xcode-select -s /Applications/Xcode.app
 
+    - name: Select Xcode version
+      run: sudo xcode-select -switch /Applications/Xcode.app
+
     # - name: Print out help command from xcodebuild
     #   run: xcodebuild -help
 
@@ -34,7 +37,9 @@ jobs:
 
     - name: Build
       run: |
-        xcodebuild -scheme ThreadsTutorials clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
+          pwd
+          ls -l
+          xcodebuild -scheme ThreadsTutorials clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
 
     # - name: build Archive
       # run: |
