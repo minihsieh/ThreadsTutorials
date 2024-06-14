@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CurrentUserProfileView: View {
     
-    @StateObject var viewModel = CurrentUserProfileViewModel()
+    @StateObject var viewModel = CurrentUserProfileViewModel.shared
     @State private var showEditProfile = false
     @State private var isSharing: Bool = false
     
@@ -118,7 +118,7 @@ struct CurrentUserProfileView: View {
             }
             .padding(.horizontal)
             .refreshable {
-                CurrentUserProfileViewModel.shared.shouldRefresh.toggle()
+                viewModel.shouldRefresh.toggle()
             }
             
         }

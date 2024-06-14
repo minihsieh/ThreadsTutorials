@@ -18,7 +18,7 @@ struct ImagePreviewView: View {
     @State private var zoomScale: CGFloat = 1
     @State private var previousZoomScale: CGFloat = 1
     private let minZoomScale: CGFloat = 1
-    private let maxZoomScale: CGFloat = 10
+    private let maxZoomScale: CGFloat = 3
     
     
     var body: some View {

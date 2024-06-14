@@ -53,7 +53,7 @@ class UserContentListViewModel: ObservableObject {
     
     @MainActor
     func fetchLikedThreads() async throws {
-        var likedThreads = try await ThreadService.fetchLikeThreads(forUid: user.id)
+        let likedThreads = try await ThreadService.fetchLikeThreads(forUid: user.id)
         self.likedthreads = likedThreads.sorted(by: { $0.timestamp.dateValue() > $1.timestamp.dateValue() })
         
         for i in 0..<likedThreads.count {

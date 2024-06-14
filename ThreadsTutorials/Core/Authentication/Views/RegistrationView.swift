@@ -14,10 +14,11 @@ struct RegistrationView: View {
     var body: some View {
         VStack {
             Spacer()
-            Image("threads-app-icon")
+            Image(.threadsAppIcon)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 120, height: 120)
+                
                 .padding()
             VStack {
                 TextField("Enter your email",text: $viewModel.email)

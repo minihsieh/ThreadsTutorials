@@ -16,22 +16,54 @@ struct ThreadService {
         try await Firestore.firestore().collection("threads").addDocument(data: threadData)
     }
     
-    static func fetchThread() async throws -> [Thread] {
-        let snapshot = try await Firestore.firestore().collection("threads").order(by: "timestamp", descending: true).getDocuments()
-        return snapshot.documents.compactMap ({
-            try? $0.data(as: Thread.self)
-        })
+//    static func fetchThread() async throws -> [Thread] {
+//        let snapshot = try await Firestore.firestore().collection("threads").order(by: "timestamp", descending: true).getDocuments()
+//        return snapshot.documents.compactMap ({
+//            try? $0.data(as: Thread.self)
+//        })
+//    }
+    
+    static func fetchThreads() async throws -> [Thread] {
+        let snapshot = try await fetchThreadDocuments()
+        return try decodeThreads(from: snapshot)
     }
     
+//    static func fetchUserThreads(uid: String) async throws -> [Thread] {
+//        let snapshot = try await Firestore
+//            .firestore()
+//            .collection("threads")
+//            .whereField("ownerUid", isEqualTo: uid)
+//            .getDocuments()
+//        let threads = snapshot.documents.compactMap({ try? $0.data(as: Thread.self)})
+//        return threads.sorted(by: { $0.timestamp.dateValue() > $1.timestamp.dateValue() })
+//    }
+    
     static func fetchUserThreads(uid: String) async throws -> [Thread] {
-        let snapshot = try await Firestore
-            .firestore()
+        let snapshot = try await fetchUserThreadDocuments(uid: uid)
+        let threads = try decodeThreads(from: snapshot)
+        return threads.sorted(by: descendingTimestampComparator)
+    }
+    
+    // MARK: - Private Methods(Extract Method)
+        
+    private static func fetchThreadDocuments() async throws -> QuerySnapshot {
+        return try await Firestore.firestore().collection("threads")
+            .order(by: "timestamp", descending: true)
+            .getDocuments()
+    }
+    
+    private static func fetchUserThreadDocuments(uid: String) async throws -> QuerySnapshot {
+        return try await Firestore.firestore()
             .collection("threads")
             .whereField("ownerUid", isEqualTo: uid)
             .getDocuments()
-        let threads = snapshot.documents.compactMap({ try? $0.data(as: Thread.self)})
-        return threads.sorted(by: { $0.timestamp.dateValue() > $1.timestamp.dateValue() })
     }
+    
+    private static func decodeThreads(from snapshot: QuerySnapshot) throws -> [Thread] {
+        return try snapshot.documents.compactMap { try $0.data(as: Thread.self) }
+    }
+    
+    private static let descendingTimestampComparator: (Thread, Thread) -> Bool = { $0.timestamp.dateValue() > $1.timestamp.dateValue() }
     
 }
 
@@ -49,19 +81,18 @@ extension ThreadService {
                     completion()
                 }
             }
-        
     }
     
-    func likeThread(_ thread: Thread) async throws {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        let userLikesRef = Firestore.firestore().collection("users")
-            .document(uid).collection("user-likes")
-  
-        try await Firestore.firestore().collection("threads").document(thread.id)
-            .updateData(["like": thread.like + 1])
-        try await userLikesRef.document(thread.id).setData([:])
-    }
+//    func likeThread(_ thread: Thread) async throws {
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+//
+//        let userLikesRef = Firestore.firestore().collection("users")
+//            .document(uid).collection("user-likes")
+//
+//        try await Firestore.firestore().collection("threads").document(thread.id)
+//            .updateData(["like": thread.like + 1])
+//        try await userLikesRef.document(thread.id).setData([:])
+//    }
     
     func unlikeThread(_ thread: Thread, completion: @escaping() -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -78,20 +109,17 @@ extension ThreadService {
             }
     }
     
-    func unlikeThread(_ thread: Thread) async throws {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        guard thread.like > 0 else { return }
-        
-        let userLikesRef = Firestore.firestore().collection("users")
-            .document(uid).collection("user-likes")
-        
-        try await Firestore.firestore().collection("threads").document(thread.id)
-            .updateData(["like": thread.like - 1])
-        try await userLikesRef.document(thread.id).delete()
-        
-         
-        
-    }
+//    func unlikeThread(_ thread: Thread) async throws {
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+//        guard thread.like > 0 else { return }
+//
+//        let userLikesRef = Firestore.firestore().collection("users")
+//            .document(uid).collection("user-likes")
+//
+//        try await Firestore.firestore().collection("threads").document(thread.id)
+//            .updateData(["like": thread.like - 1])
+//        try await userLikesRef.document(thread.id).delete()
+//    }
     
     func checkIfLikeThread(_ thread: Thread, completion: @escaping(Bool) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -105,25 +133,25 @@ extension ThreadService {
             }
     }
     
-    static func fetchLikeThreads(forUid uid: String, completion: @escaping([Thread]) -> Void) {
-        var threads = [Thread]()
-        Firestore.firestore().collection("users")
-            .document(uid).collection("user-likes")
-            .getDocuments { snapshot, _ in
-                guard let documents = snapshot?.documents else { return }
-                
-                documents.forEach { doc in
-                    let threadId = doc.documentID
-                    Firestore.firestore().collection("threads")
-                        .document(threadId)
-                        .getDocument { snapshot, _ in
-                            guard let thread = try? snapshot?.data(as: Thread.self) else { return }
-                            threads.append(thread)
-                            completion(threads)
-                        }
-                }
-            }
-    }
+//    static func fetchLikeThreads(forUid uid: String, completion: @escaping([Thread]) -> Void) {
+//        var threads = [Thread]()
+//        Firestore.firestore().collection("users")
+//            .document(uid).collection("user-likes")
+//            .getDocuments { snapshot, _ in
+//                guard let documents = snapshot?.documents else { return }
+//
+//                documents.forEach { doc in
+//                    let threadId = doc.documentID
+//                    Firestore.firestore().collection("threads")
+//                        .document(threadId)
+//                        .getDocument { snapshot, _ in
+//                            guard let thread = try? snapshot?.data(as: Thread.self) else { return }
+//                            threads.append(thread)
+//                            completion(threads)
+//                        }
+//                }
+//            }
+//    }
     
     
     static func fetchLikeThreads(forUid uid: String) async throws -> [Thread] {
@@ -156,3 +184,4 @@ extension ThreadService {
         }
     }
 }
+

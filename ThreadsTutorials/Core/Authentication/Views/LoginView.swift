@@ -14,7 +14,7 @@ struct LoginView: View {
         NavigationStack {
             VStack {
                 Spacer()
-                Image("threads-app-icon")
+                Image(.threadsAppIcon)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 120, height: 120)
@@ -68,7 +68,8 @@ struct LoginView: View {
                     .font(.footnote)
                     .foregroundColor(.black)
 
-                }.padding(.vertical, 16)
+                }
+                .padding(.vertical, 16)
             }
         }
     }
