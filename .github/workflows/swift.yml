@@ -36,10 +36,9 @@ jobs:
       run: ls -R
 
     - name: Build
-      run: |
-          pwd
-          ls -l
-          xcodebuild -project ../ThreadsTutorials.xcodeproj clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
+      run: ls -al .
+            pwd
+            xcodebuild -project ThreadsTutorials.xcodeproj clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
           # xcodebuild -project ThreadsTutorials.xcodeproj clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
           # xcodebuild -scheme ThreadsTutorials clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
 
