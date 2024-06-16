@@ -57,7 +57,7 @@ jobs:
 
     - name: build Archive
       run: |
-          sudo xcodebuild -scheme "ThreadsTutorials" \
+          sudo xcodebuild archive -scheme "ThreadsTutorials" \
           -archivePath ./build/ThreadsTutorials.xcarchive \
           -sdk iphonesimulator \
           -configuration Debug \
