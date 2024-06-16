@@ -37,23 +37,23 @@ jobs:
     # - name: open access
     #   run: chmod -R 755 /Users/runner/work/ThreadsTutorials/ThreadsTutorials/ThreadsTutorials.xcodeproj
 
-    - name: Build
-      run: |
-        sudo xcodebuild -project "./ThreadsTutorials.xcodeproj" \
-        -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2" \
-        CODE_SIGN_STYLE=Manual CODE_SIGNING_REQUIRED=NO DEVELOPMENT_TEAM= \
-        -sdk iphonesimulator \
-        -scheme ThreadsTutorials \
-        PROVISIONING_PROFILE= PROVISIONING_PROFILE_SPECIFIER=  \
-        -configuration Debug clean build
-          # |
-          # proj_path=$(pwd)
-          # sudo xcodebuild -project "$proj_path/ThreadsTutorials.xcodeproj" clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4 " -allowProvisioningUpdates
-          # ls -al .
-          # pwd
-          # xcodebuild -project ThreadsTutorials.xcodeproj clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
-          # xcodebuild -project ThreadsTutorials.xcodeproj clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
-          # xcodebuild -scheme ThreadsTutorials clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
+    # - name: Build
+    #   run: |
+    #     sudo xcodebuild -project "./ThreadsTutorials.xcodeproj" \
+    #     -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.2" \
+    #     CODE_SIGN_STYLE=Manual CODE_SIGNING_REQUIRED=NO DEVELOPMENT_TEAM= \
+    #     -sdk iphonesimulator \
+    #     -scheme ThreadsTutorials \
+    #     PROVISIONING_PROFILE= PROVISIONING_PROFILE_SPECIFIER=  \
+    #     -configuration Debug clean build
+    #       # |
+    #       # proj_path=$(pwd)
+    #       # sudo xcodebuild -project "$proj_path/ThreadsTutorials.xcodeproj" clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4 " -allowProvisioningUpdates
+    #       # ls -al .
+    #       # pwd
+    #       # xcodebuild -project ThreadsTutorials.xcodeproj clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
+    #       # xcodebuild -project ThreadsTutorials.xcodeproj clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
+    #       # xcodebuild -scheme ThreadsTutorials clean build -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"
 
     - name: build Archive
       run: |
@@ -62,7 +62,8 @@ jobs:
           -sdk iphonesimulator \
           -configuration Debug \
           -destination "platform=iOS Simulator,name=iPhone 15 Pro,OS=17.4"  \
-          CODE_SIGN_STYLE=Manual CODE_SIGNING_REQUIRED=NO DEVELOPMENT_TEAM= PROVISIONING_PROFILE= PROVISIONING_PROFILE_SPECIFIER= 
+          # CODE_SIGN_STYLE=Manual CODE_SIGNING_REQUIRED=NO DEVELOPMENT_TEAM= PROVISIONING_PROFILE= PROVISIONING_PROFILE_SPECIFIER= 
+          CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
           # |
           # -destination generic/platform=iOS \
           # clean archive
