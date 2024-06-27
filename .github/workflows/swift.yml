@@ -22,9 +22,9 @@ jobs:
 
     - name: Install provisioning profile
       run: |
-        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/pipthreadsdev.mobileprovision .github/deployment/pipthreadsdev.mobileprovision.gpg
+        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/comtpisoftwareThreadsTutorials.mobileprovision .github/deployment/comtpisoftwareThreadsTutorials.mobileprovision.gpg
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-        cp .github/deployment/pipthreadsdev.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+        cp .github/deployment/comtpisoftwareThreadsTutorials.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
     - name: Install keychain certificate
       run: |
