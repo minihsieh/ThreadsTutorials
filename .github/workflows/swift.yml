@@ -30,7 +30,7 @@ jobs:
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/certificate.p12 .github/deployment/certificate.p12.gpg
         security create-keychain -p "" build.keychain
-        security import .github/deployment/certificate.p12 -t agg -k ~/Library/Keychains/build.keychain -P "${{ secrets.CERTIFICATE_PASSWORD }}" -A -T "/usr/bin/codesign" -T "usr/bin/productsign"
+        security import .github/deployment/certificate.p12 -t agg -k ~/Library/Keychains/build.keychain -P "${{ secrets.CERTIFICATE_PASSWORD }}" -A -T "/usr/bin/codesign" -T "/usr/bin/productsign"
         security list-keychains -s ~/Library/Keychains/build.keychain
         security default-keychain -s ~/Library/Keychains/build.keychain
         security set-keychain-settings ~/Library/Keychains/build.keychain
